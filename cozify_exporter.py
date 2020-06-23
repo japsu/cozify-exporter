@@ -1,4 +1,4 @@
-from pprint import pprint
+#!/usr/bin/env python3
 
 from cozify import hub
 from flask import Flask, Response
@@ -15,7 +15,6 @@ def metrics():
     ]
 
     for device in hub.devices(capabilities=hub.capability.TEMPERATURE).values():
-        pprint(device)
         name = device['name']
         temperature = device['state']['temperature']
         output_lines.append(f'temperature_celsius{{name="{name}"}} {temperature}')
