@@ -27,7 +27,7 @@ Listens on port 5000 by default. Verify that you can access http://localhost:500
 
 If you run it as a stand-alone application, it will output all metrics once and exit:
 
-  python3 cozify_exporter.py
+    python3 cozify_exporter.py
 
 ## TODO
 
