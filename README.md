@@ -2,8 +2,6 @@
 
 Reads values from Cozify API. Outputs them in a format suitable for Prometheus scraping.
 
-TODO: Other metrics than temperature.
-
 ## Getting started
 
 ### First time setup
@@ -23,6 +21,15 @@ Authenticate to Cozify:
 
 Start the server:
 
-    python3 cozify_exporter.py
+    FLASK_APP=cozify_exporter.py flask run
 
 Listens on port 5000 by default. Verify that you can access http://localhost:5000/metrics, then configure your Prometheus instance to scrape it.
+
+If you run it as a stand-alone application, it will output all metrics once and exit:
+
+  python3 cozify_exporter.py
+
+## TODO
+
+* [X] Export all suitable values from under `state` as Prometheus metrics. Guess or hardcode which are gauges, enums or counters.
+* [ ] Use [prometheus_client](https://github.com/prometheus/client_python)
