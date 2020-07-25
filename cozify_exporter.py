@@ -14,6 +14,11 @@ EXCLUDE_KEYS = [
     'cozify_use_pir',
     'cozify_upgrade_status',
     'cozify_user',
+
+    # ZigBee Light Link (IKEA Trådfri etc.) static values, not interesting
+    'cozify_min_temperature',
+    'cozify_max_temperature',
+    'cozify_color_mode',
 ]
 
 COUNTERS = [
@@ -51,6 +56,15 @@ def metrics():
             except (TypeError, ValueError) as e:
                 app.logger.exception("Failed to cast %s", key)
                 continue
+
+            # HACK: Both temperature and color temperature are reported under same key, bad
+            capabilities = device.get("capabilities", {}).get("values", [])
+            if (
+                key == "cozify_temperature" and
+                "COLOR_TEMP" in capabilities and
+                "TEMPERATURE" not in capabilities
+            ):
+                key = "cozify_color_temperature"
 
             registry.setdefault(key, {})
             registry[key][name] = value
